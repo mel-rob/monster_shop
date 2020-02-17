@@ -1,6 +1,6 @@
 # Monster Shop
 
-## [Live Site](http://monster-shop-ddmp.herokuapp.com/)
+## [Heroku Deployment](http://monster-shop-ddmp.herokuapp.com/)
 
 ## Dev Team
 
