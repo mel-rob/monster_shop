@@ -34,12 +34,16 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  post '/coupon', to: 'coupon#add'
+  delete '/coupon', to: 'coupon#remove'
+
   namespace :merchant do
     get '/', to: 'dashboard#index'
     patch '/items/:id/activation', to: 'items#activate'
     resources :items, except: [:show]
     resources :item_orders, only: [:update]
     resources :orders, only: [:show]
+    resources :coupons
   end
 
   namespace :admin do
