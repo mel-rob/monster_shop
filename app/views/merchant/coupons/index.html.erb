@@ -1,0 +1,38 @@
+<h1>Manage My Coupons</h1>
+
+<nav id="page-actions">
+  <% if @coupons.reached_limit %>
+    <p>You have reached the maximum # of coupons and cannot create more until some are deleted.</p>
+  <% else %>
+    <%= link_to 'Create New Coupon', '/merchant/coupons/new' %>
+  <% end %>
+</nav>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Percent Off</th>
+    <th>Status</th>
+    <th>Modify</th>
+  </tr>
+  <% @coupons.each do |coupon| %>
+    <tr id="coupon-<%= coupon.id %>">
+      <td><%= link_to coupon.id, "/merchant/coupons/#{coupon.id}" %></td>
+      <td><%= link_to coupon.name, "/merchant/coupons/#{coupon.id}" %></td>
+      <td><%= coupon.code %></td>
+      <td><%= number_to_percentage(coupon.percent_off, strip_insignificant_zeros: true) %></td>
+      <td><%= coupon.enabled_status %></td>
+      <td id="modify-buttons">
+        <% if coupon.enabled %>
+          <%= button_to 'Disable', "/merchant/coupons/#{coupon.id}?enabled=false", method: :patch, id: 'inline-button', form: { id: 'inline-form' } %>
+        <% else %>
+          <%= button_to 'Enable', "/merchant/coupons/#{coupon.id}?enabled=true", method: :patch, id: 'inline-button', form: { id: 'inline-form' } %>
+        <% end %>
+        <%= button_to 'Edit', "/merchant/coupons/#{coupon.id}/edit", method: :get, id: 'inline-button', form: { id: 'inline-form' } %>
+        <%= button_to 'Delete', merchant_coupon_path(coupon), method: :delete, id: 'inline-button', form: { id: 'inline-form' } %>
+      </td>
+    </tr>
+  <% end %>
+</table>
